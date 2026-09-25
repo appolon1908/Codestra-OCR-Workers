@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.codestra.dev/document-intelligence/v1/error.schema.json",
+  "title": "Structured error without input payloads or exception messages",
+  "description": "Contract version 1.0.0. See architecture and privacy requirements in the package documentation.",
+  "type": "object",
+  "properties": {
+    "scan_id": {
+      "$ref": "#/$defs/id"
+    },
+    "tenant_id": {
+      "$ref": "#/$defs/id"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "code": {
+      "type": "string",
+      "enum": [
+        "INVALID_INPUT",
+        "UNSUPPORTED_DOCUMENT",
+        "EXTRACTION_FAILED",
+        "TIMEOUT",
+        "RATE_LIMITED",
+        "INTERNAL_ERROR"
+      ]
+    },
+    "stage": {
+      "type": "string",
+      "enum": [
+        "ingest",
+        "extract",
+        "validate",
+        "review"
+      ]
+    },
+    "retryable": {
+      "type": "boolean"
+    },
+    "occurred_at": {
+      "$ref": "#/$defs/timestamp"
+    }
+  },
+  "required": [
+    "scan_id",
+    "tenant_id",
+    "schema_version",
+    "code",
+    "stage",
+    "retryable",
+    "occurred_at"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 40,
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$"
+    }
+  }
+}
