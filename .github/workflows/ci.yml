@@ -1,0 +1,34 @@
+name: ci
+
+on:
+  push:
+    branches: ["development", "testing", "staging", "production", "mission/**"]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Quality gate including real Tesseract integration
+        run: docker build --target test -t codestra-ocr-workers:test .
+      - name: Runtime image
+        run: docker build -t codestra-ocr-workers:ci .
+      - name: Runtime smoke
+        run: |
+          docker run -d --name ocr --read-only --tmpfs /tmp --cap-drop ALL             -p 127.0.0.1:8080:8080 codestra-ocr-workers:ci
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:8080/readyz; then break; fi
+            sleep 1
+          done
+          curl -fsS http://127.0.0.1:8080/readyz
+          test "$(docker exec ocr id -u)" = "10001"
+          docker rm -f ocr
