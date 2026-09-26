@@ -1,0 +1,86 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "codestra-ocr-workers"
+version = "0.1.0"
+description = "Internal OCR worker runtime and engine adapters for Codestra document intelligence"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "Proprietary" }
+dependencies = [
+  "fastapi>=0.115,<1",
+  "pydantic>=2.9,<3",
+  "pydantic-settings>=2.6,<3",
+  "uvicorn[standard]>=0.32,<1",
+  "numpy>=2.1,<3",
+  "opencv-python-headless>=4.10,<6",
+  "prometheus-client>=0.21,<1",
+]
+
+[project.optional-dependencies]
+dev = [
+  "httpx>=0.27,<1",
+  "pytest>=8.3",
+  "ruff>=0.8",
+  "mypy>=1.13",
+  "jsonschema>=4.23",
+]
+
+[project.scripts]
+codestra-ocr-worker = "codestra_ocr_workers.main:run"
+codestra-ocr-export-openapi = "codestra_ocr_workers.openapi_export:main"
+
+# Out-of-tree engines register a factory ``(Settings) -> OCREngine`` in their own package:
+#   [project.entry-points."codestra_ocr_workers.engines"]
+#   paddleocr = "codestra_ocr_paddle:build_engine"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+codestra_ocr_workers = ["py.typed"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "N", "SIM", "RUF", "PL", "PT"]
+ignore = [
+  "PLR0913",  # engine/extractor signatures are explicit on purpose
+  "PLR2004",  # magic values are document-format constants
+  "PLR0911",
+  "PLR0912",
+  "S603",     # tesseract subprocess is invoked with a fixed argv, never a shell
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S105", "S106", "PLR0915", "PLR0917", "PLC0415", "PT018"]
+"scripts/**" = ["S101"]
+"src/codestra_ocr_workers/app.py" = ["PLR0915"]  # route factory
+"src/codestra_ocr_workers/extractors/do_driver_license.py" = ["RUF001"]  # OCR glyph variants
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+mypy_path = "src"
+packages = ["codestra_ocr_workers"]
+plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+module = ["cv2", "cv2.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+markers = [
+  "integration: requires the real tesseract binary with the spa language pack",
+]
+filterwarnings = [
+  "error::pytest.PytestUnraisableExceptionWarning",
+  "ignore:Using `httpx` with `starlette.testclient` is deprecated",
+]

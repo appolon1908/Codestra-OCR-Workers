@@ -1,0 +1,12 @@
+version: 1
+repository: Codestra-OCR-Workers
+repository_url: https://github.com/ingtrader21-spec/Codestra-OCR-Workers.git
+canonical_path: /home/codestra/Worktrees/document-intelligence/Codestra-OCR-Workers
+active_worktree: /home/codestra/Worktrees/document-intelligence/Codestra-OCR-Workers
+active_branch: mission/document-intelligence-foundation-20260925
+base_branch: development
+base_sha: bd7ea365e2568d33706556545b5218300f2bce95
+upstream_ref: origin/mission/document-intelligence-foundation-20260925
+publication_branch: mission/document-intelligence-foundation-20260925
+production_effects_allowed: false
+certification_mode: isolated_exact_sha

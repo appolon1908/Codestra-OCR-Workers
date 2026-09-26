@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "repository": "Codestra-OCR-Workers",
+  "repository_url": "https://github.com/ingtrader21-spec/Codestra-OCR-Workers.git",
+  "active_branch": "mission/document-intelligence-foundation-20260925",
+  "base_branch": "development",
+  "base_sha": "bd7ea365e2568d33706556545b5218300f2bce95",
+  "upstream_ref": "origin/mission/document-intelligence-foundation-20260925",
+  "publication_branch": "mission/document-intelligence-foundation-20260925",
+  "development_workstation": "codestra-desktop",
+  "publication_workstation": "Appolon",
+  "allow_production_effects": false,
+  "allow_force_push": false,
+  "canonical_worktree": "/home/codestra/Worktrees/document-intelligence/Codestra-OCR-Workers",
+  "updated_at": "2026-09-26T17:02:12.136777+00:00"
+}

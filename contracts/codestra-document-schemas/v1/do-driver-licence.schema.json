@@ -1,0 +1,562 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.codestra.dev/document-intelligence/v1/do-driver-licence.schema.json",
+  "title": "Transient Dominican Republic driver licence extraction",
+  "description": "Contract version 1.0.0. See architecture and privacy requirements in the package documentation.",
+  "type": "object",
+  "properties": {
+    "scan_id": {
+      "$ref": "#/$defs/id"
+    },
+    "tenant_id": {
+      "$ref": "#/$defs/id"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "document_type": {
+      "const": "driver_license"
+    },
+    "country": {
+      "const": "DO"
+    },
+    "engine": {
+      "$ref": "#/$defs/engine"
+    },
+    "fields": {
+      "$ref": "#/$defs/licenceFields"
+    },
+    "field_evidence": {
+      "$ref": "#/$defs/licenceEvidence"
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/warning"
+      },
+      "maxItems": 100
+    },
+    "qr_evidence": {
+      "$ref": "#/$defs/qr"
+    },
+    "content_digests": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/contentDigest"
+      },
+      "maxItems": 10,
+      "minItems": 1,
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "scan_id",
+    "tenant_id",
+    "schema_version",
+    "document_type",
+    "country",
+    "engine",
+    "fields",
+    "field_evidence",
+    "warnings",
+    "qr_evidence",
+    "content_digests"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "bbox": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1
+      },
+      "description": "Normalized [x_min, y_min, x_max, y_max]. Application checks ordering."
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "contentDigest": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": [
+            "front",
+            "back",
+            "document"
+          ]
+        },
+        "digest": {
+          "$ref": "#/$defs/digest"
+        }
+      },
+      "required": [
+        "role",
+        "digest"
+      ],
+      "additionalProperties": false
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "minLength": 10,
+      "maxLength": 10,
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "digest": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 71,
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "engine": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/id"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._+-]{0,63}$"
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "enum": [
+            "ocr",
+            "qr",
+            "derived"
+          ]
+        },
+        "confidence": {
+          "$ref": "#/$defs/confidence"
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        },
+        "bbox": {
+          "$ref": "#/$defs/bbox"
+        },
+        "raw_text": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 2048,
+          "pattern": "\\S"
+        }
+      },
+      "required": [
+        "source",
+        "confidence"
+      ],
+      "additionalProperties": false
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "licenceEvidence": {
+      "type": "object",
+      "properties": {
+        "full_name": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "maxItems": 20
+        },
+        "document_number": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "maxItems": 20
+        },
+        "address": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "maxItems": 20
+        },
+        "height": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "maxItems": 20
+        },
+        "weight_lb": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "maxItems": 20
+        },
+        "sex": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "maxItems": 20
+        },
+        "blood_type": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "maxItems": 20
+        },
+        "birth_date": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "maxItems": 20
+        },
+        "issue_date": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "maxItems": 20
+        },
+        "expiry_date": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "maxItems": 20
+        },
+        "category": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "maxItems": 20
+        },
+        "restriction": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "maxItems": 20
+        },
+        "first_issue_date": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "maxItems": 20
+        },
+        "card_serial": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/evidence"
+          },
+          "maxItems": 20
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    },
+    "licenceFields": {
+      "type": "object",
+      "properties": {
+        "full_name": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200,
+              "pattern": "\\S"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "document_number": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 13,
+              "pattern": "^(?:[0-9]{11}|[0-9]{3}-[0-9]{7}-[0-9])$",
+              "description": "Transient OCR only; never persist or log the clear value."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "address": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 500,
+              "pattern": "\\S"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "height": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 0.3,
+              "maximum": 3,
+              "description": "Normalized metres."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "weight_lb": {
+          "anyOf": [
+            {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 1500
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sex": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "M",
+                "F",
+                "X"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "blood_type": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "A+",
+                "A-",
+                "B+",
+                "B-",
+                "AB+",
+                "AB-",
+                "O+",
+                "O-"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "birth_date": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/date"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "issue_date": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/date"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expiry_date": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/date"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "category": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 20,
+              "pattern": "^[A-Z0-9][A-Z0-9 ./-]{0,19}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "restriction": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 200,
+              "pattern": "\\S"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "first_issue_date": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/date"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "card_serial": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9-]{0,39}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "full_name",
+        "document_number",
+        "address",
+        "height",
+        "weight_lb",
+        "sex",
+        "blood_type",
+        "birth_date",
+        "issue_date",
+        "expiry_date",
+        "category",
+        "restriction",
+        "first_issue_date",
+        "card_serial"
+      ],
+      "additionalProperties": false
+    },
+    "qr": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "const": "decoded"
+            },
+            "payload_digest": {
+              "$ref": "#/$defs/digest"
+            },
+            "raw_payload": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 8192,
+              "pattern": "\\S"
+            }
+          },
+          "required": [
+            "status",
+            "payload_digest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": [
+                "not_detected",
+                "unreadable"
+              ]
+            }
+          },
+          "required": [
+            "status"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "warning": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string",
+          "enum": [
+            "LOW_CONFIDENCE",
+            "MISSING_FIELD",
+            "QR_UNREADABLE",
+            "QR_MISMATCH",
+            "UNSUPPORTED_LAYOUT",
+            "DATE_ORDER",
+            "REVIEW_REQUIRED"
+          ]
+        },
+        "field": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64,
+          "pattern": "^[a-z][a-z0-9_]{0,63}$"
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "info",
+            "warning",
+            "error"
+          ]
+        }
+      },
+      "required": [
+        "code",
+        "severity"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
