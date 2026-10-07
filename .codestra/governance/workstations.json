@@ -1,0 +1,621 @@
+{
+  "schema_version": "codestra.workstations.v3",
+  "family": "document-intelligence",
+  "product": "Codestra-OCR-Workers",
+  "sections": [
+    {
+      "section": "ocr-01-runtime",
+      "branch": "section/ocr-01-runtime",
+      "order": 1,
+      "depends_on": [],
+      "subsections": [
+        {
+          "subsection": "01-worker-bootstrap",
+          "workstation_id": "codestra-ocr-workers::ocr-01-runtime::01-worker-bootstrap",
+          "branch": "subsection/ocr-01-runtime--01-worker-bootstrap",
+          "parent_branch": "section/ocr-01-runtime",
+          "order": 1,
+          "depends_on": [],
+          "required_gates": [
+            "lint",
+            "unit",
+            "integration",
+            "contract",
+            "security",
+            "clean_tree",
+            "remote_sha_match",
+            "ci_exact_sha",
+            "review",
+            "regression"
+          ],
+          "worktree": "/srv/codestra/workstations/Codestra-OCR-Workers/sections/ocr-01-runtime/subsections/01-worker-bootstrap/repo"
+        },
+        {
+          "subsection": "02-config",
+          "workstation_id": "codestra-ocr-workers::ocr-01-runtime::02-config",
+          "branch": "subsection/ocr-01-runtime--02-config",
+          "parent_branch": "section/ocr-01-runtime",
+          "order": 2,
+          "depends_on": [
+            "codestra-ocr-workers::ocr-01-runtime::01-worker-bootstrap"
+          ],
+          "required_gates": [
+            "lint",
+            "unit",
+            "integration",
+            "contract",
+            "security",
+            "clean_tree",
+            "remote_sha_match",
+            "ci_exact_sha",
+            "review",
+            "regression"
+          ],
+          "worktree": "/srv/codestra/workstations/Codestra-OCR-Workers/sections/ocr-01-runtime/subsections/02-config/repo"
+        },
+        {
+          "subsection": "03-health",
+          "workstation_id": "codestra-ocr-workers::ocr-01-runtime::03-health",
+          "branch": "subsection/ocr-01-runtime--03-health",
+          "parent_branch": "section/ocr-01-runtime",
+          "order": 3,
+          "depends_on": [
+            "codestra-ocr-workers::ocr-01-runtime::02-config"
+          ],
+          "required_gates": [
+            "lint",
+            "unit",
+            "integration",
+            "contract",
+            "security",
+            "clean_tree",
+            "remote_sha_match",
+            "ci_exact_sha",
+            "review",
+            "regression"
+          ],
+          "worktree": "/srv/codestra/workstations/Codestra-OCR-Workers/sections/ocr-01-runtime/subsections/03-health/repo"
+        }
+      ]
+    },
+    {
+      "section": "ocr-02-preprocessing",
+      "branch": "section/ocr-02-preprocessing",
+      "order": 2,
+      "depends_on": [
+        "codestra-ocr-workers::ocr-01-runtime"
+      ],
+      "subsections": [
+        {
+          "subsection": "01-image-cleanup",
+          "workstation_id": "codestra-ocr-workers::ocr-02-preprocessing::01-image-cleanup",
+          "branch": "subsection/ocr-02-preprocessing--01-image-cleanup",
+          "parent_branch": "section/ocr-02-preprocessing",
+          "order": 1,
+          "depends_on": [],
+          "required_gates": [
+            "lint",
+            "unit",
+            "integration",
+            "contract",
+            "security",
+            "clean_tree",
+            "remote_sha_match",
+            "ci_exact_sha",
+            "review",
+            "regression"
+          ],
+          "worktree": "/srv/codestra/workstations/Codestra-OCR-Workers/sections/ocr-02-preprocessing/subsections/01-image-cleanup/repo"
+        },
+        {
+          "subsection": "02-layout",
+          "workstation_id": "codestra-ocr-workers::ocr-02-preprocessing::02-layout",
+          "branch": "subsection/ocr-02-preprocessing--02-layout",
+          "parent_branch": "section/ocr-02-preprocessing",
+          "order": 2,
+          "depends_on": [
+            "codestra-ocr-workers::ocr-02-preprocessing::01-image-cleanup"
+          ],
+          "required_gates": [
+            "lint",
+            "unit",
+            "integration",
+            "contract",
+            "security",
+            "clean_tree",
+            "remote_sha_match",
+            "ci_exact_sha",
+            "review",
+            "regression"
+          ],
+          "worktree": "/srv/codestra/workstations/Codestra-OCR-Workers/sections/ocr-02-preprocessing/subsections/02-layout/repo"
+        },
+        {
+          "subsection": "03-language-detection",
+          "workstation_id": "codestra-ocr-workers::ocr-02-preprocessing::03-language-detection",
+          "branch": "subsection/ocr-02-preprocessing--03-language-detection",
+          "parent_branch": "section/ocr-02-preprocessing",
+          "order": 3,
+          "depends_on": [
+            "codestra-ocr-workers::ocr-02-preprocessing::02-layout"
+          ],
+          "required_gates": [
+            "lint",
+            "unit",
+            "integration",
+            "contract",
+            "security",
+            "clean_tree",
+            "remote_sha_match",
+            "ci_exact_sha",
+            "review",
+            "regression"
+          ],
+          "worktree": "/srv/codestra/workstations/Codestra-OCR-Workers/sections/ocr-02-preprocessing/subsections/03-language-detection/repo"
+        }
+      ]
+    },
+    {
+      "section": "ocr-03-engines",
+      "branch": "section/ocr-03-engines",
+      "order": 3,
+      "depends_on": [
+        "codestra-ocr-workers::ocr-02-preprocessing"
+      ],
+      "subsections": [
+        {
+          "subsection": "01-engine-registry",
+          "workstation_id": "codestra-ocr-workers::ocr-03-engines::01-engine-registry",
+          "branch": "subsection/ocr-03-engines--01-engine-registry",
+          "parent_branch": "section/ocr-03-engines",
+          "order": 1,
+          "depends_on": [],
+          "required_gates": [
+            "lint",
+            "unit",
+            "integration",
+            "contract",
+            "security",
+            "clean_tree",
+            "remote_sha_match",
+            "ci_exact_sha",
+            "review",
+            "regression"
+          ],
+          "worktree": "/srv/codestra/workstations/Codestra-OCR-Workers/sections/ocr-03-engines/subsections/01-engine-registry/repo"
+        },
+        {
+          "subsection": "02-models",
+          "workstation_id": "codestra-ocr-workers::ocr-03-engines::02-models",
+          "branch": "subsection/ocr-03-engines--02-models",
+          "parent_branch": "section/ocr-03-engines",
+          "order": 2,
+          "depends_on": [
+            "codestra-ocr-workers::ocr-03-engines::01-engine-registry"
+          ],
+          "required_gates": [
+            "lint",
+            "unit",
+            "integration",
+            "contract",
+            "security",
+            "clean_tree",
+            "remote_sha_match",
+            "ci_exact_sha",
+            "review",
+            "regression"
+          ],
+          "worktree": "/srv/codestra/workstations/Codestra-OCR-Workers/sections/ocr-03-engines/subsections/02-models/repo"
+        },
+        {
+          "subsection": "03-fallback",
+          "workstation_id": "codestra-ocr-workers::ocr-03-engines::03-fallback",
+          "branch": "subsection/ocr-03-engines--03-fallback",
+          "parent_branch": "section/ocr-03-engines",
+          "order": 3,
+          "depends_on": [
+            "codestra-ocr-workers::ocr-03-engines::02-models"
+          ],
+          "required_gates": [
+            "lint",
+            "unit",
+            "integration",
+            "contract",
+            "security",
+            "clean_tree",
+            "remote_sha_match",
+            "ci_exact_sha",
+            "review",
+            "regression"
+          ],
+          "worktree": "/srv/codestra/workstations/Codestra-OCR-Workers/sections/ocr-03-engines/subsections/03-fallback/repo"
+        }
+      ]
+    },
+    {
+      "section": "ocr-04-queues",
+      "branch": "section/ocr-04-queues",
+      "order": 4,
+      "depends_on": [
+        "codestra-ocr-workers::ocr-03-engines"
+      ],
+      "subsections": [
+        {
+          "subsection": "01-job-consume",
+          "workstation_id": "codestra-ocr-workers::ocr-04-queues::01-job-consume",
+          "branch": "subsection/ocr-04-queues--01-job-consume",
+          "parent_branch": "section/ocr-04-queues",
+          "order": 1,
+          "depends_on": [],
+          "required_gates": [
+            "lint",
+            "unit",
+            "integration",
+            "contract",
+            "security",
+            "clean_tree",
+            "remote_sha_match",
+            "ci_exact_sha",
+            "review",
+            "regression"
+          ],
+          "worktree": "/srv/codestra/workstations/Codestra-OCR-Workers/sections/ocr-04-queues/subsections/01-job-consume/repo"
+        },
+        {
+          "subsection": "02-retry-dlq",
+          "workstation_id": "codestra-ocr-workers::ocr-04-queues::02-retry-dlq",
+          "branch": "subsection/ocr-04-queues--02-retry-dlq",
+          "parent_branch": "section/ocr-04-queues",
+          "order": 2,
+          "depends_on": [
+            "codestra-ocr-workers::ocr-04-queues::01-job-consume"
+          ],
+          "required_gates": [
+            "lint",
+            "unit",
+            "integration",
+            "contract",
+            "security",
+            "clean_tree",
+            "remote_sha_match",
+            "ci_exact_sha",
+            "review",
+            "regression"
+          ],
+          "worktree": "/srv/codestra/workstations/Codestra-OCR-Workers/sections/ocr-04-queues/subsections/02-retry-dlq/repo"
+        },
+        {
+          "subsection": "03-idempotency",
+          "workstation_id": "codestra-ocr-workers::ocr-04-queues::03-idempotency",
+          "branch": "subsection/ocr-04-queues--03-idempotency",
+          "parent_branch": "section/ocr-04-queues",
+          "order": 3,
+          "depends_on": [
+            "codestra-ocr-workers::ocr-04-queues::02-retry-dlq"
+          ],
+          "required_gates": [
+            "lint",
+            "unit",
+            "integration",
+            "contract",
+            "security",
+            "clean_tree",
+            "remote_sha_match",
+            "ci_exact_sha",
+            "review",
+            "regression"
+          ],
+          "worktree": "/srv/codestra/workstations/Codestra-OCR-Workers/sections/ocr-04-queues/subsections/03-idempotency/repo"
+        }
+      ]
+    },
+    {
+      "section": "ocr-05-scaling",
+      "branch": "section/ocr-05-scaling",
+      "order": 5,
+      "depends_on": [
+        "codestra-ocr-workers::ocr-04-queues"
+      ],
+      "subsections": [
+        {
+          "subsection": "01-concurrency",
+          "workstation_id": "codestra-ocr-workers::ocr-05-scaling::01-concurrency",
+          "branch": "subsection/ocr-05-scaling--01-concurrency",
+          "parent_branch": "section/ocr-05-scaling",
+          "order": 1,
+          "depends_on": [],
+          "required_gates": [
+            "lint",
+            "unit",
+            "integration",
+            "contract",
+            "security",
+            "clean_tree",
+            "remote_sha_match",
+            "ci_exact_sha",
+            "review",
+            "regression"
+          ],
+          "worktree": "/srv/codestra/workstations/Codestra-OCR-Workers/sections/ocr-05-scaling/subsections/01-concurrency/repo"
+        },
+        {
+          "subsection": "02-resource-limits",
+          "workstation_id": "codestra-ocr-workers::ocr-05-scaling::02-resource-limits",
+          "branch": "subsection/ocr-05-scaling--02-resource-limits",
+          "parent_branch": "section/ocr-05-scaling",
+          "order": 2,
+          "depends_on": [
+            "codestra-ocr-workers::ocr-05-scaling::01-concurrency"
+          ],
+          "required_gates": [
+            "lint",
+            "unit",
+            "integration",
+            "contract",
+            "security",
+            "clean_tree",
+            "remote_sha_match",
+            "ci_exact_sha",
+            "review",
+            "regression"
+          ],
+          "worktree": "/srv/codestra/workstations/Codestra-OCR-Workers/sections/ocr-05-scaling/subsections/02-resource-limits/repo"
+        },
+        {
+          "subsection": "03-backpressure",
+          "workstation_id": "codestra-ocr-workers::ocr-05-scaling::03-backpressure",
+          "branch": "subsection/ocr-05-scaling--03-backpressure",
+          "parent_branch": "section/ocr-05-scaling",
+          "order": 3,
+          "depends_on": [
+            "codestra-ocr-workers::ocr-05-scaling::02-resource-limits"
+          ],
+          "required_gates": [
+            "lint",
+            "unit",
+            "integration",
+            "contract",
+            "security",
+            "clean_tree",
+            "remote_sha_match",
+            "ci_exact_sha",
+            "review",
+            "regression"
+          ],
+          "worktree": "/srv/codestra/workstations/Codestra-OCR-Workers/sections/ocr-05-scaling/subsections/03-backpressure/repo"
+        }
+      ]
+    },
+    {
+      "section": "ocr-06-security",
+      "branch": "section/ocr-06-security",
+      "order": 6,
+      "depends_on": [
+        "codestra-ocr-workers::ocr-05-scaling"
+      ],
+      "subsections": [
+        {
+          "subsection": "01-artifact-isolation",
+          "workstation_id": "codestra-ocr-workers::ocr-06-security::01-artifact-isolation",
+          "branch": "subsection/ocr-06-security--01-artifact-isolation",
+          "parent_branch": "section/ocr-06-security",
+          "order": 1,
+          "depends_on": [],
+          "required_gates": [
+            "lint",
+            "unit",
+            "integration",
+            "contract",
+            "security",
+            "clean_tree",
+            "remote_sha_match",
+            "ci_exact_sha",
+            "review",
+            "regression"
+          ],
+          "worktree": "/srv/codestra/workstations/Codestra-OCR-Workers/sections/ocr-06-security/subsections/01-artifact-isolation/repo"
+        },
+        {
+          "subsection": "02-secrets",
+          "workstation_id": "codestra-ocr-workers::ocr-06-security::02-secrets",
+          "branch": "subsection/ocr-06-security--02-secrets",
+          "parent_branch": "section/ocr-06-security",
+          "order": 2,
+          "depends_on": [
+            "codestra-ocr-workers::ocr-06-security::01-artifact-isolation"
+          ],
+          "required_gates": [
+            "lint",
+            "unit",
+            "integration",
+            "contract",
+            "security",
+            "clean_tree",
+            "remote_sha_match",
+            "ci_exact_sha",
+            "review",
+            "regression"
+          ],
+          "worktree": "/srv/codestra/workstations/Codestra-OCR-Workers/sections/ocr-06-security/subsections/02-secrets/repo"
+        },
+        {
+          "subsection": "03-sandbox",
+          "workstation_id": "codestra-ocr-workers::ocr-06-security::03-sandbox",
+          "branch": "subsection/ocr-06-security--03-sandbox",
+          "parent_branch": "section/ocr-06-security",
+          "order": 3,
+          "depends_on": [
+            "codestra-ocr-workers::ocr-06-security::02-secrets"
+          ],
+          "required_gates": [
+            "lint",
+            "unit",
+            "integration",
+            "contract",
+            "security",
+            "clean_tree",
+            "remote_sha_match",
+            "ci_exact_sha",
+            "review",
+            "regression"
+          ],
+          "worktree": "/srv/codestra/workstations/Codestra-OCR-Workers/sections/ocr-06-security/subsections/03-sandbox/repo"
+        }
+      ]
+    },
+    {
+      "section": "ocr-07-observability",
+      "branch": "section/ocr-07-observability",
+      "order": 7,
+      "depends_on": [
+        "codestra-ocr-workers::ocr-06-security"
+      ],
+      "subsections": [
+        {
+          "subsection": "01-metrics",
+          "workstation_id": "codestra-ocr-workers::ocr-07-observability::01-metrics",
+          "branch": "subsection/ocr-07-observability--01-metrics",
+          "parent_branch": "section/ocr-07-observability",
+          "order": 1,
+          "depends_on": [],
+          "required_gates": [
+            "lint",
+            "unit",
+            "integration",
+            "contract",
+            "security",
+            "clean_tree",
+            "remote_sha_match",
+            "ci_exact_sha",
+            "review",
+            "regression"
+          ],
+          "worktree": "/srv/codestra/workstations/Codestra-OCR-Workers/sections/ocr-07-observability/subsections/01-metrics/repo"
+        },
+        {
+          "subsection": "02-logs",
+          "workstation_id": "codestra-ocr-workers::ocr-07-observability::02-logs",
+          "branch": "subsection/ocr-07-observability--02-logs",
+          "parent_branch": "section/ocr-07-observability",
+          "order": 2,
+          "depends_on": [
+            "codestra-ocr-workers::ocr-07-observability::01-metrics"
+          ],
+          "required_gates": [
+            "lint",
+            "unit",
+            "integration",
+            "contract",
+            "security",
+            "clean_tree",
+            "remote_sha_match",
+            "ci_exact_sha",
+            "review",
+            "regression"
+          ],
+          "worktree": "/srv/codestra/workstations/Codestra-OCR-Workers/sections/ocr-07-observability/subsections/02-logs/repo"
+        },
+        {
+          "subsection": "03-performance",
+          "workstation_id": "codestra-ocr-workers::ocr-07-observability::03-performance",
+          "branch": "subsection/ocr-07-observability--03-performance",
+          "parent_branch": "section/ocr-07-observability",
+          "order": 3,
+          "depends_on": [
+            "codestra-ocr-workers::ocr-07-observability::02-logs"
+          ],
+          "required_gates": [
+            "lint",
+            "unit",
+            "integration",
+            "contract",
+            "security",
+            "clean_tree",
+            "remote_sha_match",
+            "ci_exact_sha",
+            "review",
+            "regression"
+          ],
+          "worktree": "/srv/codestra/workstations/Codestra-OCR-Workers/sections/ocr-07-observability/subsections/03-performance/repo"
+        }
+      ]
+    },
+    {
+      "section": "ocr-08-release",
+      "branch": "section/ocr-08-release",
+      "order": 8,
+      "depends_on": [
+        "codestra-ocr-workers::ocr-07-observability"
+      ],
+      "subsections": [
+        {
+          "subsection": "01-tests",
+          "workstation_id": "codestra-ocr-workers::ocr-08-release::01-tests",
+          "branch": "subsection/ocr-08-release--01-tests",
+          "parent_branch": "section/ocr-08-release",
+          "order": 1,
+          "depends_on": [],
+          "required_gates": [
+            "lint",
+            "unit",
+            "integration",
+            "contract",
+            "security",
+            "clean_tree",
+            "remote_sha_match",
+            "ci_exact_sha",
+            "review",
+            "regression"
+          ],
+          "worktree": "/srv/codestra/workstations/Codestra-OCR-Workers/sections/ocr-08-release/subsections/01-tests/repo"
+        },
+        {
+          "subsection": "02-container",
+          "workstation_id": "codestra-ocr-workers::ocr-08-release::02-container",
+          "branch": "subsection/ocr-08-release--02-container",
+          "parent_branch": "section/ocr-08-release",
+          "order": 2,
+          "depends_on": [
+            "codestra-ocr-workers::ocr-08-release::01-tests"
+          ],
+          "required_gates": [
+            "lint",
+            "unit",
+            "integration",
+            "contract",
+            "security",
+            "clean_tree",
+            "remote_sha_match",
+            "ci_exact_sha",
+            "review",
+            "regression"
+          ],
+          "worktree": "/srv/codestra/workstations/Codestra-OCR-Workers/sections/ocr-08-release/subsections/02-container/repo"
+        },
+        {
+          "subsection": "03-certification-promotion",
+          "workstation_id": "codestra-ocr-workers::ocr-08-release::03-certification-promotion",
+          "branch": "subsection/ocr-08-release--03-certification-promotion",
+          "parent_branch": "section/ocr-08-release",
+          "order": 3,
+          "depends_on": [
+            "codestra-ocr-workers::ocr-08-release::02-container"
+          ],
+          "required_gates": [
+            "lint",
+            "unit",
+            "integration",
+            "contract",
+            "security",
+            "clean_tree",
+            "remote_sha_match",
+            "ci_exact_sha",
+            "review",
+            "regression"
+          ],
+          "worktree": "/srv/codestra/workstations/Codestra-OCR-Workers/sections/ocr-08-release/subsections/03-certification-promotion/repo"
+        }
+      ]
+    }
+  ]
+}
